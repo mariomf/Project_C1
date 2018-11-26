@@ -1,4 +1,5 @@
 //*******************************JAVASCRIPT PARA FORMULARIO***********************************************************
+var GlobalKey;
 $(document).ready(function(){
 
     //$( "#persistirCompra" ).click(function(  ) {
@@ -37,6 +38,7 @@ $(document).ready(function(){
  *
  **/
     traerInfoComida();
+
     function traerInfoComida()
     {
         /*$.getJSON("/sheets/Sheet1!A2:A", function (data) {
@@ -80,15 +82,15 @@ $(document).ready(function(){
                 food2Data += '</div>';
 
 
-
+                GlobalKey = key;
                 //console.log(auxx[0]);
             });
             $('.food3').append(food2Data);
-
         });
+
     }
 });
-console.log(a+b);
+// console.log(a+b);
 var a = 1;
 var b = 1;
 
@@ -97,27 +99,132 @@ document.querySelector('#persistirCompra').addEventListener('click', accion1);
 function accion1() {
 
 
-    a = parseInt(document.getElementById('food0').value);
+    /*a = parseInt(document.getElementById('food0').value);
     b = document.getElementById('food1').value;
-    var c = document.getElementById('firstName').value;
+    var c = document.getElementById('firstName').value;*/
 
-    var urlVideogamesPersist = "/send-mail/"+c;
 
-    postearMail(urlVideogamesPersist);
+    // var newForm = fillForm();
+    var urlVideogamesPersist = "/send-mail";
+    var newForm = fillForms();
+
+
+
+    postearMail(urlVideogamesPersist,newForm);
+
+    console.log(JSON.stringify(newForm));
+    //alert(newForm.FirsName+" GRACIAS POR TU COMPRA!!");
     //window.location.href = "http://localhost:8083/result";
 
-    //console.log(a+b);
-    //console.log(c);
+    //console.log(a);
+    //console.log(b);
+    // console.log(newForm.Name.toString());
 }
 
-function postearMail(UrlAEnviar){
+function postearMail(UrlAEnviar,data){
     $.ajax({
         type: "POST",
         contentType: "application/json; charset=utf-8",
         url: UrlAEnviar,
+        data:  JSON.stringify(data),
         dataType: "json"
     });
 }
+
+//*******************************    Object FormInfo       ***********************************************************
+function fillForms() {
+
+    // $.getJSON("/sheets/Sheet1!A2:C", function (data) {
+    //
+    //     var Aux_json= '';
+    //     $.each(data, function (key, val) {
+    //
+    //         var aux_FoodName = val.valueOf();
+    //         Aux_json += aux_FoodName[0] + ": " + "$(#food"+key+").val(),";
+    //     });
+        var i;
+        var text_aux, text_aux1;
+        var  text = {};
+        for (i = 0; i < GlobalKey; i++) {
+            // obj.key3 = "value3";
+            // Using square bracket notation:
+            //     obj["key3"] = "value3";
+            text_aux = "food"+i;
+            text_aux1 = $("#food+i").val()
+            // text[text_aux] =  text_aux1;
+            Object.assign(text, {text_aux : text_aux1});
+            // text.push("Food"+i+ ":" +$("#food+i").val()+",");
+        }
+        // text.push("Food"+GlobalKey+ ":" +$("#food+GlobalKey").val());
+
+        // $.each(data, function (key, val) {
+        //
+        // });
+
+        var FormInfo = {FirstName: $("#firstName").val(),
+            LastName: $("#lastName").val(),
+            Email: $("#email").val(),
+            Direction: $("#address").val(),
+            Direction2: $("#address2").val(),
+            Country: $("#country").val(),
+            State: $("#state").val(),
+            PostalCode: $("#zip").val(),
+
+            ShippingDay: $("#date").val(),
+            ShippingTime: $("#exampleFormControlSelect1").val(),
+
+            food1: "hola",
+
+        };
+
+        // FormInfo += text;
+        console.log(JSON.stringify(text));
+        return FormInfo;
+        // var urlVideogamesPersist = "/send-mail";
+        // postearMail(urlVideogamesPersist,FormInfo);
+
+    // });
+
+}
+//*******************************    Object FormInfo       ***********************************************************
+//*******************************    Object FormInfo       ***********************************************************
+function fillForm() {
+
+    var FirstName = document.getElementById('firstName').value;
+    var LastName = document.getElementById('lastName').value;
+    var Email = document.getElementById('email').value;
+    var Direction = document.getElementById('address').value;
+    var Direction2 = document.getElementById('address2').value;
+    var Country = document.getElementById('country').value;
+    var State = document.getElementById('state').value;
+    var PostalCode = document.getElementById('zip').value;
+
+    var ShippingDay = document.getElementById('date').value;
+    var ShippingTime = document.getElementById('exampleFormControlSelect1').value;
+
+    var FormInfo = new Object();
+
+    FormInfo.FirsName = FirstName;
+    FormInfo.Surname  = LastName;
+    FormInfo.Email    = Email;
+    FormInfo.Direction = Direction;
+    FormInfo.Direction2 = Direction2;
+    FormInfo.Country = Country;
+    FormInfo.State = State;
+    FormInfo.PostalCode = PostalCode;
+
+    FormInfo.ShippingDay = ShippingDay;
+    FormInfo.ShippingTime = ShippingTime;
+
+    //FormInfo.NameInCard = ;
+
+
+
+    return FormInfo;
+
+}
+//*******************************    Object FormInfo       ***********************************************************
+
 //*******************************    CONTACT SECTION       ***********************************************************
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 //(function() {

@@ -11,8 +11,7 @@ package com.project.project_C_1.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import java.util.List;
-import java.util.Optional;
+
 
 
 public class Form{
@@ -22,6 +21,7 @@ public class Form{
 
     private String FirstName;
     private String LastName;
+    private String Phone1;
     private String Email;
 
 
@@ -35,12 +35,13 @@ public class Form{
     private String ShippingDay;
     private String ShippingTime;
 
-    public Form(int idForm, String FirstName, String LastName, String Email, String Direction1, String Direction2,
+    public Form(int idForm, String FirstName, String LastName, String Phone1, String Email, String Direction1, String Direction2,
                 String Country, String State1, String PostalCode, String ShippingDay, String ShippingTime){
 
         this.idForm = idForm;
         this.FirstName = FirstName;
         this.LastName = LastName;
+        this.Phone1 = Phone1;
         this.Email = Email;
         this.Direction1 = Direction1;
         this.Direction2 = Direction2;
@@ -78,6 +79,10 @@ public class Form{
     public void setLastName(String lastName) {
         LastName = lastName;
     }
+
+    public String getPhone1() { return Phone1; }
+
+    public void setPhone1(String phone1) { Phone1 = phone1; }
 
     public String getEmail() {
         return Email;
